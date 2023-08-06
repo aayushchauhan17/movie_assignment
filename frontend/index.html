@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <title>Movie Website</title>
   </head>
   <body>
@@ -25,6 +25,7 @@
             <button onclick="searchFun()">Search</button>
           </div>
         </div>
+        <div id="cardMovie"></div>
       </div>
       <div id="playlist" class="playlist">
         <p>Playlist</p>
@@ -44,11 +45,48 @@
       }
     }
 
+    function showCard(data) {
+      const x = `
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title">${data?.Title}</h5>
+                        <h2 class="card-subtitle mb-2 text-muted">${
+                          data?.Actors
+                        }</h6>
+
+                        <div>Director: ${data?.Director}</div>
+                        <div>Language: ${data?.Language}</div>
+                        <div>Runtime: ${data?.Runtime}</div>
+                        <div>Type: ${data?.Type}</div>
+                        <div>Writer: ${data?.Writer}</div>
+                        <div>Year: ${data?.Year}</div>
+                        <div>Imdb Rating: ${data?.imdbRating}</div>  
+                        <rr>
+                        <div>
+                          helo
+                        </div>
+                    </div>
+                    <div>
+                      ${
+                        data?.Poster
+                          ? `<img src= ${data?.Poster} height="300px" />`
+                          : ""
+                      }
+                    </div>
+                </div>
+            </div>
+        `;
+
+      document.getElementById("cardMovie").innerHTML = x;
+    }
+
     function getdata(url) {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          showCard(data);
         })
         .catch((err) => {
           console.log(err);

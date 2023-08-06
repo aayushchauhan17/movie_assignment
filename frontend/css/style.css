@@ -38,3 +38,17 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.card {
+    display: flex;
+    flex-direction: row;
+    gap : 100px;
+}
+
+.card-title{
+    font-size: 20px;
+}
+
+.col-4{
+    margin-top: 100px;
+}

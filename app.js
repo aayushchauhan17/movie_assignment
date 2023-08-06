@@ -16,13 +16,13 @@ const port = process.env.PORT || 3000;
 app.get('/search', (req, res)=>{
 
     if(!req.query.title){
-        return res.send({
+        return res.json({
             error : "Please enter the title!"
         })
     }
 
     getData(req.query.title, (data)=>{
-        res.status(200).send(data);
+        res.json(data);
     })
 })
 

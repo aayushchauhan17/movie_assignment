@@ -19,7 +19,7 @@ app.get('/search', (req, res)=>{
     }
 
     getData(req.query.title, (data)=>{
-        res.send(data);
+        res.status(200).send(data);
     })
 })
 

@@ -77,8 +77,10 @@ function authRoute(key) {
   }
 }
 
-function sendData(data) {
-  fetch("https://movieassignment-production.up.railway.app/signup", {
+async function sendData(data) {
+  const url = "https://movieassignment-production.up.railway.app/signup";
+  const url1 = "http://localhost:3000/signup";
+  await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -100,12 +102,12 @@ function signUpFun() {
   let password = document.getElementById("password").value;
 
   const data = {
-    username: username,
+    userName: username,
     email: email,
     password: password,
   };
 
-  console.log(data);
+  console.log("send data", data);
 
   sendData(data);
 

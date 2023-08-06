@@ -22,7 +22,14 @@ app.post("/signup", (req, res) => {
   const { userName, email, password } = req.body;
   const playlist = [];
 
-  const newUser = new User({ userName, email, password, playlist });
+  console.log(req.body);
+
+  const newUser = new User({
+    userName,
+    email,
+    password,
+    playlist,
+  });
   newUser
     .save()
     .then((use) => {

@@ -7,6 +7,8 @@ app.get('/',(req,res)=>{
     res.send("Welcome!!")
 })
 
+const port = process.env.PORT || 3000;
+
 
 app.get('/search', (req, res)=>{
 
@@ -22,6 +24,6 @@ app.get('/search', (req, res)=>{
 })
 
 
-app.listen(process.env.PORT || 3000, "0.0.0.0", ()=>{
-    console.log("server is up")
+app.listen(port, "0.0.0.0", ()=>{
+    console.log("server is up " + port)
 })

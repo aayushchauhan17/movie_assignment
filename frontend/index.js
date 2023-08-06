@@ -117,7 +117,7 @@ function signUpFun() {
 async function veriyUser(data) {
   const url1 = "http://localhost:3000/login";
   const url = "https://movieassignment-production.up.railway.app/login";
-  await fetch(url1, {
+  await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.search{
+    display: block;
+}
+
+.playlist{
+    display: none;
+}
+
+.navbar{
+    display: flex;
+    gap: 50px;
+}
+
+.navbar button{
+    width: 100px;
+    height: 30px;
+    font-size: 18px;   
+    background-color: #eee;
+    border: 0px;
+    border-radius: 5%;
+}
+
+#searchBtn{
+    background-color: skyblue;
+}
+
+.field{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

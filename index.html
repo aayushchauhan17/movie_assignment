@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Movie Website</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Box Office</h1>
+      <div class="navbar">
+        <button id="searchBtn" onclick="renderComp('playlist', 'searchBtn')">
+          Search
+        </button>
+        <button id="playlistBtn" onclick="renderComp('search', 'playlistBtn')">
+          Playlist
+        </button>
+      </div>
+      <div id="search" class="search">
+        <div class="field">
+          <p>Enter Title :</p>
+          <div>
+            <input type="text" id="title" placeholder="Enter Title" />
+            <button onclick="searchFun()">Search</button>
+          </div>
+        </div>
+      </div>
+      <div id="playlist" class="playlist">
+        <p>Playlist</p>
+      </div>
+    </div>
+  </body>
+  <script>
+    function renderComp(id, id1) {
+      document.getElementById(id).style.display = "none";
+      document.getElementById(id1).style.backgroundColor = "skyblue";
+      if (id == "search") {
+        document.getElementById("playlist").style.display = "block";
+        document.getElementById("searchBtn").style.backgroundColor = "#eee";
+      } else {
+        document.getElementById("search").style.display = "block";
+        document.getElementById("playlistBtn").style.backgroundColor = "#eee";
+      }
+    }
+
+    async function searchFun() {
+      var x = document.getElementById("title").value;
+
+      //   var response = await fetch("http://localhost:3000/search?title=" + x);
+      //   console.log(response.json());
+
+      fetch("http://localhost:3000/search?title=" + x.trim(), {
+        mode: "no-cors",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("NETWORK RESPONSE ERROR");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => console.error("FETCH ERROR:", error));
+    }
+  </script>
+</html>

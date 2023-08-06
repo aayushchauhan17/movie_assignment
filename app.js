@@ -1,10 +1,13 @@
 const express = require('express');
 const getData = require('./node_files/getData.js');
+const cors = require('cors'); 
 
 const app = express();
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors());
 
 app.get('/',(req,res)=>{
     res.send("Welcome!!")

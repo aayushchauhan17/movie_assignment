@@ -77,6 +77,23 @@ function authRoute(key) {
   }
 }
 
+function sendData(data) {
+  fetch("https://movieassignment-production.up.railway.app/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 function signUpFun() {
   let username = document.getElementById("username").value;
   let email = document.getElementById("email").value;
@@ -89,6 +106,8 @@ function signUpFun() {
   };
 
   console.log(data);
+
+  sendData(data);
 
   authRoute("login");
 }

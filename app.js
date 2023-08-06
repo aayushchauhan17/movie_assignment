@@ -40,6 +40,38 @@ app.post("/signup", (req, res) => {
     });
 });
 
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  console.log(req.body);
+
+  async function getDataDb(email, password) {
+    await User.find()
+      .then((data) => {
+        let state = false;
+        data?.forEach((e) => {
+          console.log(e);
+          if (e.email === email) {
+            if (e.password !== password) {
+              res.json({ status: "Password not matched" });
+              //   return false;
+            }
+            res.json({ status: "Successfully verified" });
+            state = true;
+            // return true;
+          }
+        });
+        if (state === false) {
+          res.status(200).json({ status: "Not Found User" });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ status: "Error fetching User" });
+      });
+  }
+  getDataDb(email, password);
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });

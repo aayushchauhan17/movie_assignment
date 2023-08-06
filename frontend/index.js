@@ -114,7 +114,40 @@ function signUpFun() {
   authRoute("login");
 }
 
+async function veriyUser(data) {
+  const url1 = "http://localhost:3000/login";
+  const url = "https://movieassignment-production.up.railway.app/login";
+  await fetch(url1, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      alert(data.status);
+      if (data.status === "Successfully verified") {
+        document.getElementById("auth").style.display = "none";
+        document.getElementById("container").style.display = "block";
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 function loginFun() {
-  document.getElementById("auth").style.display = "none";
-  document.getElementById("container").style.display = "block";
+  let email = document.getElementById("email1").value;
+  let password = document.getElementById("password1").value;
+
+  const data = {
+    email: email,
+    password: password,
+  };
+
+  console.log(data);
+
+  veriyUser(data);
 }

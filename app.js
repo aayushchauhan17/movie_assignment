@@ -105,6 +105,22 @@ app.put("/addplaylist", (req, res) => {
   findDataFun(userId);
 });
 
+app.post("/playlist", (req, res) => {
+  const { userId } = req.body;
+
+  async function findDatabyId() {
+    await User.findById(userId)
+      .then((e) => {
+        res.json(e.playlist);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: "Error fetching the book" + err });
+      });
+  }
+
+  findDatabyId(userId);
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });

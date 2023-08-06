@@ -1,4 +1,69 @@
+function showPlaylistCard(dataPlaylist) {
+  dataPlaylist.forEach((data) => {
+    const x = `
+          <div class="col-4">
+              <div class="card">
+                  <div class="card-body">
+                      <h1 class="card-title">${data?.Title}</h5>
+                      <h2 class="card-subtitle mb-2 text-muted">${
+                        data?.Actors
+                      }</h6>
+
+                      <div>Director: ${data?.Director}</div>
+                      <div>Language: ${data?.Language}</div>
+                      <div>Runtime: ${data?.Runtime}</div>
+                      <div>Type: ${data?.Type}</div>
+                      <div>Writer: ${data?.Writer}</div>
+                      <div>Year: ${data?.Year}</div>
+                      <div>Imdb Rating: ${data?.imdbRating}</div>  
+                      <br>
+                      
+                  </div>
+                  <div>
+                    ${
+                      data?.Poster
+                        ? `<img src= ${data?.Poster} height="300px" />`
+                        : ""
+                    }
+                  </div>
+              </div>
+          </div>
+      `;
+
+    document.getElementById("playlistContainer").innerHTML =
+      document.getElementById("playlistContainer").innerHTML + x;
+  });
+}
+
 function renderComp(id, id1) {
+  if (id === "search") {
+    const userId = sessionStorage.getItem("userId");
+
+    const url1 = "http://localhost:3000/playlist";
+    const url = "https://movieassignment-production.up.railway.app/playlist";
+
+    const data = {
+      userId: userId,
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        document.getElementById("playlistContainer").innerHTML = "";
+        showPlaylistCard(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   document.getElementById(id).style.display = "none";
   document.getElementById(id1).style.backgroundColor = "skyblue";
   if (id == "search") {
@@ -182,7 +247,7 @@ function addPlaylist() {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          alert(data.status);
+          alert("Added to Playlist");
         })
         .catch((error) => {
           console.error("Error:", error);

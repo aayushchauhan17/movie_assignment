@@ -47,6 +47,10 @@
     flex-direction: column;
 }
 
+.card-body{
+    max-width: 600px;
+}
+
 .card {
     display: flex;
     flex-direction: row;

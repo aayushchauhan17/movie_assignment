@@ -27,9 +27,9 @@ function showCard(data) {
                       <div>Writer: ${data?.Writer}</div>
                       <div>Year: ${data?.Year}</div>
                       <div>Imdb Rating: ${data?.imdbRating}</div>  
-                      <rr>
+                      <br>
                       <div>
-                        helo
+                        <button onclick="addPlaylist()" > Add to Playlist </button>
                       </div>
                   </div>
                   <div>
@@ -50,7 +50,6 @@ function getdata(url) {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       showCard(data);
     })
     .catch((err) => {
@@ -63,7 +62,6 @@ function searchFun() {
 
   url = "https://movieassignment-production.up.railway.app/search?title=" + x;
 
-  console.log(x, url);
   getdata(url);
 }
 
@@ -129,6 +127,9 @@ async function veriyUser(data) {
       console.log(data);
       alert(data.status);
       if (data.status === "Successfully verified") {
+        console.log(data.userData);
+        sessionStorage.setItem("userData", data.userData);
+        sessionStorage.setItem("userId", data.userData._id);
         document.getElementById("auth").style.display = "none";
         document.getElementById("container").style.display = "block";
       }
@@ -150,4 +151,44 @@ function loginFun() {
   console.log(data);
 
   veriyUser(data);
+}
+
+function addPlaylist() {
+  console.log(sessionStorage.getItem("userId"));
+  const userId = sessionStorage.getItem("userId");
+
+  var x = document.getElementById("title").value;
+  MovieURL =
+    "https://movieassignment-production.up.railway.app/search?title=" + x;
+
+  const url1 = "http://localhost:3000/addplaylist";
+  const url = "https://movieassignment-production.up.railway.app/addplaylist";
+
+  fetch(MovieURL)
+    .then((res) => res.json())
+    .then((data) => {
+      const dataSend = {
+        userId: userId,
+        playlist: data,
+      };
+
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataSend),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          alert(data.status);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }

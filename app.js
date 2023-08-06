@@ -50,13 +50,13 @@ app.post("/login", (req, res) => {
       .then((data) => {
         let state = false;
         data?.forEach((e) => {
-          console.log(e);
           if (e.email === email) {
             if (e.password !== password) {
               res.json({ status: "Password not matched" });
               //   return false;
             }
-            res.json({ status: "Successfully verified" });
+            res.json({ status: "Successfully verified", userData: e });
+            console.log(e);
             state = true;
             // return true;
           }
@@ -70,6 +70,39 @@ app.post("/login", (req, res) => {
       });
   }
   getDataDb(email, password);
+});
+
+app.put("/addplaylist", (req, res) => {
+  const { userId, playlist } = req.body;
+
+  async function updateData(userId, playlist, oldData) {
+    console.log(oldData);
+    await User.findByIdAndUpdate(
+      userId,
+      { playlist: [...oldData?.playlist, playlist] },
+      { new: true }
+    )
+      .then((updatedUser) => {
+        if (!updatedUser) {
+          return res.status(404).json({ error: "Book not found" });
+        }
+        res.json(updatedUser);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: "Error updating the book" + err });
+      });
+  }
+
+  async function findDataFun(userId) {
+    await User.findById(userId)
+      .then((e) => {
+        updateData(userId, playlist, e);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: "Error fetching the book" + err });
+      });
+  }
+  findDataFun(userId);
 });
 
 app.get("/", (req, res) => {

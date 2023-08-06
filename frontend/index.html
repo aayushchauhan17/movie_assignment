@@ -18,7 +18,7 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required />
 
-            <button onclick="loginFun()">Login</button>
+            <button type="submit" onclick="loginFun()">Login</button>
           </form>
           <br />
           <p>
@@ -47,7 +47,7 @@
               required
             />
 
-            <button onclick="signUpFun()">Sign Up</button>
+            <button type="submit" onclick="signUpFun()">Sign Up</button>
           </form>
 
           <br />
@@ -89,76 +89,4 @@
   </body>
 
   <script src="index.js"></script>
-
-  <script>
-    function renderComp(id, id1) {
-      document.getElementById(id).style.display = "none";
-      document.getElementById(id1).style.backgroundColor = "skyblue";
-      if (id == "search") {
-        document.getElementById("playlist").style.display = "flex";
-        document.getElementById("searchBtn").style.backgroundColor = "#eee";
-      } else {
-        document.getElementById("search").style.display = "flex";
-        document.getElementById("playlistBtn").style.backgroundColor = "#eee";
-      }
-    }
-
-    function showCard(data) {
-      const x = `
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="card-title">${data?.Title}</h5>
-                        <h2 class="card-subtitle mb-2 text-muted">${
-                          data?.Actors
-                        }</h6>
-
-                        <div>Director: ${data?.Director}</div>
-                        <div>Language: ${data?.Language}</div>
-                        <div>Runtime: ${data?.Runtime}</div>
-                        <div>Type: ${data?.Type}</div>
-                        <div>Writer: ${data?.Writer}</div>
-                        <div>Year: ${data?.Year}</div>
-                        <div>Imdb Rating: ${data?.imdbRating}</div>  
-                        <rr>
-                        <div>
-                          helo
-                        </div>
-                    </div>
-                    <div>
-                      ${
-                        data?.Poster
-                          ? `<img src= ${data?.Poster} height="300px" />`
-                          : ""
-                      }
-                    </div>
-                </div>
-            </div>
-        `;
-
-      document.getElementById("cardMovie").innerHTML = x;
-    }
-
-    function getdata(url) {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          showCard(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    function searchFun() {
-      var x = document.getElementById("title").value;
-
-      url =
-        "https://movieassignment-production.up.railway.app/search?title=" + x;
-
-      console.log(x, url);
-      getdata(url);
-    }
-  </script>
 </html>
